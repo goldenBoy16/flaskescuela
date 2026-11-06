@@ -1,0 +1,18 @@
+{% extends "appbuilder/base.html" %}
+{% block content %}
+<div class="panel panel-primary"><div class="panel-heading"><h4>Reporte: asistencia por estudiante</h4></div>
+<div class="panel-body">
+<form method="get" class="form-inline" style="margin-bottom:15px">
+  <label>Desde</label> <input type="date" name="desde" value="{{ desde }}" class="form-control">
+  <label>Hasta</label> <input type="date" name="hasta" value="{{ hasta }}" class="form-control">
+  <label>Curso</label> <select name="curso" class="form-control"><option value="">Todos</option>
+    {% for c in cursos %}<option value="{{ c.id }}" {{ 'selected' if c.id == curso_id }}>{{ c }}</option>{% endfor %}</select>
+  <button class="btn btn-primary">Filtrar</button>
+</form>
+<table class="table table-striped table-bordered">
+<thead><tr><th>Estudiante</th><th>Curso</th><th>Presente</th><th>Falta</th><th>Licencia</th><th>Atraso</th><th>Total</th></tr></thead>
+<tbody>{% for est, curso, p, f, l, a, t in filas %}
+<tr><td>{{ est }}</td><td>{{ curso }}</td><td>{{ p }}</td><td>{{ f }}</td><td>{{ l }}</td><td>{{ a }}</td><td>{{ t }}</td></tr>
+{% else %}<tr><td colspan="7">Sin resultados.</td></tr>{% endfor %}</tbody></table>
+</div></div>
+{% endblock %}

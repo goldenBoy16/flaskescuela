@@ -1,0 +1,19 @@
+{% extends "appbuilder/base.html" %}
+{% block content %}
+<div class="panel panel-primary"><div class="panel-heading"><h4>Reporte: rendimiento académico (mínimo {{ minima }})</h4></div>
+<div class="panel-body">
+<form method="get" class="form-inline" style="margin-bottom:15px">
+  <label>Curso</label> <select name="curso" class="form-control"><option value="">Todos</option>
+    {% for c in cursos %}<option value="{{ c.id }}" {{ 'selected' if c.id == curso_id }}>{{ c }}</option>{% endfor %}</select>
+  <label>Condición</label> <select name="condicion" class="form-control"><option value="">Todas</option>
+    {% for e in ['Aprobado','Reprobado'] %}<option {{ 'selected' if e == condicion }}>{{ e }}</option>{% endfor %}</select>
+  <button class="btn btn-primary">Filtrar</button>
+</form>
+<table class="table table-striped table-bordered">
+<thead><tr><th>Estudiante</th><th>Curso</th><th>Notas</th><th>Promedio</th><th>Condición</th></tr></thead>
+<tbody>{% for est, curso, prom, n in filas %}
+<tr><td>{{ est }}</td><td>{{ curso }}</td><td>{{ n }}</td><td>{{ '%.1f'|format(prom) }}</td>
+<td>{% if prom >= minima %}<span class="label label-success">Aprobado</span>{% else %}<span class="label label-danger">Reprobado</span>{% endif %}</td></tr>
+{% else %}<tr><td colspan="5">Sin resultados.</td></tr>{% endfor %}</tbody></table>
+</div></div>
+{% endblock %}

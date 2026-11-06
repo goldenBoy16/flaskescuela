@@ -1,0 +1,23 @@
+{% extends "appbuilder/base.html" %}
+{% block content %}
+<div class="panel panel-primary"><div class="panel-heading"><h4>Asistente IA - orientación pedagógica</h4></div>
+<div class="panel-body">
+<form method="post" class="form-inline">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <label>Estudiante</label>
+  <select name="estudiante" class="form-control" required><option value="">Seleccione...</option>
+    {% for e in estudiantes %}<option value="{{ e.id }}" {{ 'selected' if e.id == est_id }}>{{ e.nombre }} - {{ e.curso }}</option>{% endfor %}</select>
+  <button class="btn btn-primary">Generar retroalimentación</button>
+</form>
+{% if error %}<div class="alert alert-warning" style="margin-top:15px">{{ error }}</div>{% endif %}
+{% if respuesta %}
+<div class="well" style="margin-top:15px">
+  <strong>Datos analizados:</strong>
+  {% for m, p in resumen.notas %}<span class="label {{ 'label-success' if p >= minima else 'label-danger' }}">{{ m }}: {{ '%.0f'|format(p) }}</span> {% endfor %}
+  {% for k, v in resumen.asistencia.items() %}<span class="label label-default">{{ k }}: {{ v }}</span> {% endfor %}
+  <hr><strong>Fuente:</strong> {{ fuente }}<hr>
+  <div style="white-space:pre-wrap">{{ respuesta }}</div>
+  <hr><small>Orientación de apoyo; la decisión pedagógica es del docente.</small>
+</div>{% endif %}
+</div></div>
+{% endblock %}
