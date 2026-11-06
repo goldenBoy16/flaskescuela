@@ -71,10 +71,10 @@ appbuilder.add_view(NotaView, "Notas", icon="fa-pencil", category="Evaluación")
 appbuilder.add_view(AsistenciaView, "Asistencia", icon="fa-check-square-o", category="Evaluación")
 
 # Comenta estas líneas si aún no has creado los archivos reports.py ni ai.py
-# from .reports import ReporteNotasView, ReporteAsistenciaView, ReporteRendimientoView
+from .reports import ReporteNotasView, ReporteAsistenciaView, ReporteRendimientoView
 # from .ai import AsistenteIAView
 
-# appbuilder.add_view(ReporteNotasView, "Notas por curso y materia", category="Reportes", icon="fa-table")
-# appbuilder.add_view(ReporteAsistenciaView, "Asistencia por estudiante", category="Reportes", icon="fa-calendar")
-# appbuilder.add_view(ReporteRendimientoView, "Rendimiento académico", category="Reportes", icon="fa-bar-chart")
-# appbuilder.add_view(AsistenteIAView, "Asistente IA", category="Evaluación", icon="fa-magic")
+appbuilder.add_view(ReporteNotasView, "Notas por curso y materia", category="Reportes", icon="fa-table")
+appbuilder.add_view(ReporteAsistenciaView, "Asistencia por estudiante", category="Reportes", icon="fa-calendar")
+appbuilder.add_view(ReporteRendimientoView, "Rendimiento académico", category="Reportes", icon="fa-bar-chart")
+appbuilder.add_view(AsistenteIAView, "Asistente IA", category="Evaluación", icon="fa-magic")
