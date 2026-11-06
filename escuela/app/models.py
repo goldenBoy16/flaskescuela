@@ -85,6 +85,9 @@ class Nota(Model):
     materia_id = Column(Integer, ForeignKey("materia.id"), nullable=False)
     materia = relationship("Materia", back_populates="notas")
 
+    def __repr__(self):        
+        return f"{self.materia.nombre if self.materia else 'Materia'}: {self.calificacion}"
+
 
 class Asistencia(Model):
     __tablename__ = "asistencia"
@@ -97,3 +100,6 @@ class Asistencia(Model):
     
     materia_id = Column(Integer, ForeignKey("materia.id"), nullable=False)
     materia = relationship("Materia", back_populates="asistencias")
+
+    def __repr__(self):        
+        return f"{self.fecha} - {self.estado}"
