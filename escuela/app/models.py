@@ -11,8 +11,8 @@ class Curso(Model):
     gestion = Column(Integer, nullable=False)         # año lectivo
 
     # Relaciones inversas (uno a muchos)
-    estudiantes = relationship("Estudiante", back_populates="curso")
-    materias = relationship("Materia", back_populates="curso")
+    estudiantes = relationship("Estudiante", back_populates="curso", cascade="all, delete-orphan")
+    materias = relationship("Materia", back_populates="curso", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"{self.nombre} '{self.paralelo}' ({self.gestion})"
@@ -46,8 +46,8 @@ class Estudiante(Model):
     curso = relationship("Curso", back_populates="estudiantes")
 
     # Relaciones inversas
-    notas = relationship("Nota", back_populates="estudiante")
-    asistencias = relationship("Asistencia", back_populates="estudiante")
+    notas = relationship("Nota", back_populates="estudiante", cascade="all, delete-orphan")
+    asistencias = relationship("Asistencia", back_populates="estudiante", cascade="all, delete-orphan")
 
     def __repr__(self):
         return self.nombre
@@ -66,8 +66,8 @@ class Materia(Model):
     docente = relationship("Docente", back_populates="materias")
 
     # Relaciones inversas
-    notas = relationship("Nota", back_populates="materia")
-    asistencias = relationship("Asistencia", back_populates="materia")
+    notas = relationship("Nota", back_populates="materia", cascade="all, delete-orphan")
+    asistencias = relationship("Asistencia", back_populates="materia", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"{self.nombre} - {self.curso}"
@@ -79,10 +79,10 @@ class Nota(Model):
     trimestre = Column(Integer, nullable=False)       # 1, 2, 3
     calificacion = Column(Float, nullable=False)      # 0 a 100
     
-    estudiante_id = Column(Integer, ForeignKey("estudiante.id"), nullable=False)
+    estudiante_id = Column(Integer, ForeignKey("estudiante.id", ondelete="CASCADE"), nullable=False)
     estudiante = relationship("Estudiante", back_populates="notas")
     
-    materia_id = Column(Integer, ForeignKey("materia.id"), nullable=False)
+    materia_id = Column(Integer, ForeignKey("materia.id", ondelete="CASCADE"), nullable=False)
     materia = relationship("Materia", back_populates="notas")
 
     def __repr__(self):        
@@ -95,10 +95,10 @@ class Asistencia(Model):
     fecha = Column(Date, nullable=False)
     estado = Column(String(15), nullable=False)       # Presente/Falta/Licencia/Atraso
     
-    estudiante_id = Column(Integer, ForeignKey("estudiante.id"), nullable=False)
+    estudiante_id = Column(Integer, ForeignKey("estudiante.id", ondelete="CASCADE"), nullable=False)
     estudiante = relationship("Estudiante", back_populates="asistencias")
     
-    materia_id = Column(Integer, ForeignKey("materia.id"), nullable=False)
+    materia_id = Column(Integer, ForeignKey("materia.id", ondelete="CASCADE"), nullable=False)
     materia = relationship("Materia", back_populates="asistencias")
 
     def __repr__(self):        
